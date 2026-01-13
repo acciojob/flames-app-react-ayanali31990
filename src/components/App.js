@@ -23,44 +23,28 @@ class App extends Component {
     let str1 = name1.split("");
     let str2 = name2.split("");
 
-    // Remove common characters (case-sensitive)
     for (let i = 0; i < str1.length; i++) {
-      let index = str2.indexOf(str1[i]);
+      const index = str2.indexOf(str1[i]);
       if (index !== -1) {
         str1.splice(i, 1);
         str2.splice(index, 1);
-        i--; // adjust index after removal
+        i--;
       }
     }
 
     const count = str1.length + str2.length;
     const mod = count % 6;
 
-    let answer = "";
-    switch (mod) {
-      case 1:
-        answer = "Friends";
-        break;
-      case 2:
-        answer = "Love";
-        break;
-      case 3:
-        answer = "Affection";
-        break;
-      case 4:
-        answer = "Marriage";
-        break;
-      case 5:
-        answer = "Enemy";
-        break;
-      case 0:
-        answer = "Siblings";
-        break;
-      default:
-        answer = "";
-    }
+    const map = {
+      1: "Friends",
+      2: "Love",
+      3: "Affection",
+      4: "Marriage",
+      5: "Enemy",
+      0: "Siblings",
+    };
 
-    this.setState({ result: answer });
+    this.setState({ result: map[mod] });
   };
 
   clearAll = () => {
@@ -73,30 +57,30 @@ class App extends Component {
         {/* Do not remove the main div */}
 
         <input
-          data-testid="input1"
+          type="text"
           name="name1"
+          data-testid="input1"
           value={this.state.name1}
           onChange={this.handleChange}
-          placeholder="Enter first name"
         />
 
         <input
-          data-testid="input2"
+          type="text"
           name="name2"
+          data-testid="input2"
           value={this.state.name2}
           onChange={this.handleChange}
-          placeholder="Enter second name"
         />
 
         <button
-          data-testid="calculate_relationship"
           name="calculate_relationship"
+          data-testid="calculate_relationship"
           onClick={this.calculateRelationship}
         >
           Calculate Relationship
         </button>
 
-        <button data-testid="clear" name="clear" onClick={this.clearAll}>
+        <button name="clear" data-testid="clear" onClick={this.clearAll}>
           Clear
         </button>
 
